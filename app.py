@@ -9,12 +9,12 @@ from flask import Flask, render_template, request, redirect, url_for, session
  
 app = Flask(__name__)
  
-app.secret_key = 'PLKMNBVCDFGHNMLOIJHGFDSDFGHJKK'
- 
+app.secret_key = '3Pw13VwNVqpFrfgSxVAoFF88TrCExpGbndQ1KoTgRwxeLl3V3dRH3c6YnBN58OV7'
+
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = '31101991'
-app.config['MYSQL_DB'] = 'geeklogin'
+app.config['MYSQL_DB'] = 'login'
  
 mysql = MySQL(app)
  
@@ -69,6 +69,7 @@ def register():
             cursor.execute('INSERT INTO accounts VALUES (NULL,% s, % s, % s)', (username, password, email, ))
             mysql.connection.commit()
             msg = 'You have successfully registered !'
+            return render_template('user_registered.html', msg=msg)
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
     return render_template('register.html', msg = msg)
@@ -85,7 +86,8 @@ def form():
         
         cursor.execute('INSERT INTO inputs VALUES (NULL, % s, % s, % s, % s)', (current_user, first_name, last_name, location, ))
         mysql.connection.commit()
-        msg = 'You have successfully completed the form.\n'
+        # msg = 'You have successfully completed the form.\n'
+        return render_template('form_completed.html', msg = msg)
     elif request.method == 'POST':
         msg = 'Please fill out the form.'
     return render_template('form.html', msg = msg)
