@@ -4,6 +4,7 @@ import smtplib, ssl
 import MySQLdb.cursors
 
 from flask_mysqldb import MySQL
+from email.mime.text import MIMEText
 from flask import Flask, render_template, request, redirect, url_for, session
  
  
@@ -117,13 +118,16 @@ def password_recovery():
             port = 587  # For starttls
             smtp_server = "smtp.gmail.com"
             receiver_email = str(user_email)
-            sender_email = "manosandroulidakis31@gmail.com"
-            password = 'zzsvjycmbjntgsew'
-            
+            sender_email = "python.login.app@gmail.com"
+            password = 'juylujnydhyzbacn'
             
             text = """This is your password: {fpassword}""".format(fpassword=user_password)
             message = 'Subject: {}\n\n{}'.format('Password Recovery', text)            
             
+            message = MIMEText("This is your password: {fpassword}".format(fpassword=user_password))
+            message['Subject']= 'Password Recovery'
+            message['From'] = sender_email
+            message['To'] = receiver_email
             
             context = ssl.create_default_context()
             with smtplib.SMTP(smtp_server, port) as server:
@@ -131,8 +135,7 @@ def password_recovery():
                 server.starttls(context=context)
                 server.ehlo()
                 server.login(sender_email, password)
-                server.sendmail(sender_email, receiver_email, message)
-            
+                server.sendmail(sender_email, [receiver_email], message.as_string()) 
             
             return render_template('mail_sent.html', msg = msg)
     
