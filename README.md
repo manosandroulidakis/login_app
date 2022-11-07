@@ -9,9 +9,9 @@ and follow the steps listed below:
         open MySQL command line client
         enter your password
         and run the following command:
-
+        '''
         source path\to\the\file\simple_login\login_query.sql
-
+        '''
         then open VScode and create/activate virtual environment and install requirements.txt
 
         finally run app.py
