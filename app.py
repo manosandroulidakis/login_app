@@ -59,20 +59,20 @@ def register():
         cursor.execute('SELECT * FROM accounts WHERE username = % s', (username, ))
         account = cursor.fetchone()
         if account:
-            msg = 'Account already exists !'
+            msg = 'Account already exists.'
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
-            msg = 'Invalid email address !'
+            msg = 'Invalid email address.'
         elif not re.match(r'[A-Za-z0-9]+', username):
-            msg = 'Username must contain only characters and numbers !'
+            msg = 'Username must contain only characters and numbers.'
         elif not username or not password or not email:
-            msg = 'Please fill out the form !'
+            msg = 'Please fill out the form.'
         else:
             cursor.execute('INSERT INTO accounts VALUES (NULL,% s, % s, % s)', (username, password, email, ))
             mysql.connection.commit()
-            msg = 'You have successfully registered !'
+            msg = 'You have successfully registered.'
             return render_template('user_registered.html', msg=msg)
     elif request.method == 'POST':
-        msg = 'Please fill out the form !'
+        msg = 'Please fill out the form.'
     return render_template('register.html', msg = msg)
 
 ####
@@ -87,7 +87,6 @@ def form():
         
         cursor.execute('INSERT INTO inputs VALUES (NULL, % s, % s, % s, % s)', (current_user, first_name, last_name, location, ))
         mysql.connection.commit()
-        # msg = 'You have successfully completed the form.\n'
         return render_template('form_completed.html', msg = msg)
     elif request.method == 'POST':
         msg = 'Please fill out the form.'
@@ -138,6 +137,7 @@ def password_recovery():
                 server.sendmail(sender_email, [receiver_email], message.as_string()) 
             
             return render_template('mail_sent.html', msg = msg)
+        
     
     return render_template('password_recovery.html')
 
