@@ -1,6 +1,6 @@
 ## Demo Web Application
 
-This app uses Bootstrap, jinja, Fask and a mysql database
+This app uses Bootstrap, jinja, Flask and a mysql database
 to create a login API with the option of password recovery.
 In order to interact with the API follow the steps listed below:
 
